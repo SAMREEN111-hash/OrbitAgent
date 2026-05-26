@@ -1,130 +1,88 @@
-# 🧠 SmartAgent — Agentic AI Assistant
+# OrbitAgent
 
-> A fully local, privacy-first agentic AI assistant. No API keys. No cloud. Runs entirely on your machine.
+Agentic AI assistant with web search, code execution, maths, summarisation and fact-checking — built on LangChain and Groq.
 
-Built by **Samreen** · [SAMREEN111-hash](https://github.com/SAMREEN111-hash)
+Live demo: https://samreen111-hash-orbitagent.streamlit.app
 
----
-
-## 🚀 What Makes SmartAgent Different
-
-Most AI assistants send your data to the cloud. SmartAgent runs **100% locally** using open-source LLMs through Ollama — your conversations never leave your machine.
-
-On top of the standard agent features, SmartAgent adds:
-
-| Feature | Description |
-|---------|-------------|
-| 📄 **Text Summariser** | Paste any long text and get clean bullet-point summary |
-| ✅ **Fact Checker** | Give it a claim, it searches the web and gives a verdict |
-| 📝 **Sticky Notes** | Save quick notes directly in the sidebar |
-| 📤 **Export Chat** | Download any conversation as a .txt file |
-| ⭐ **Favourite Chats** | Star important conversations |
-| 🗑 **Delete Chats** | Clean up chat history |
-| 📊 **Usage Stats** | See how many chats and messages you've sent |
+![Python](https://img.shields.io/badge/Python-3.10+-blue) ![LangChain](https://img.shields.io/badge/LangChain-latest-green) ![Groq](https://img.shields.io/badge/Groq-Llama3.3-orange) ![Streamlit](https://img.shields.io/badge/Streamlit-latest-red)
 
 ---
 
-## 🛠️ Tech Stack
+## Overview
 
-| Tool | Purpose |
-|------|---------|
-| **LangChain** | Agent framework & tool orchestration |
-| **Ollama** | Run LLMs locally (Llama3.2, Mistral, Gemma) |
-| **Streamlit** | Interactive web UI |
-| **DuckDuckGo** | No-API-key real-time web search |
-| **LLMMathChain** | Symbolic maths solver |
-| **PythonREPL** | Sandboxed code execution |
+OrbitAgent is a conversational AI agent that decides which tool to use based on your input. Ask a question, paste an article, give it a maths problem or a Python task — it handles it without you specifying how.
 
 ---
 
-## 🧩 Agent Architecture
+## Tools
 
-```
-User Input
-    │
-    ▼
-SmartAgent (LangChain CONVERSATIONAL_REACT)
-    │
-    ├──► 🔍 Web Search      (DuckDuckGo — no API key)
-    ├──► 🧮 Calculator       (LLMMathChain)
-    ├──► 🐍 Python REPL      (sandboxed execution)
-    ├──► 📄 Summariser       (LLMChain + custom prompt)   ← NEW
-    └──► ✅ Fact Checker     (search + LLM reasoning)     ← NEW
-    │
-    ▼
-ConversationBufferWindowMemory (sliding window, k=6)
-    │
-    ▼
-Local LLM via Ollama (Llama3.2 / Mistral / Gemma)
-```
+| Tool | What it does |
+|------|-------------|
+| Web search | Real-time search via DuckDuckGo — no API key required |
+| Calculator | Solves mathematical expressions using LLMMathChain |
+| Python REPL | Writes and executes Python code in a sandboxed environment |
+| Summariser | Takes any text and returns structured bullet points |
+| Fact checker | Searches the web and returns TRUE / FALSE / UNCERTAIN with reasoning |
 
 ---
 
-## ⚡ Quick Start
+## Features
 
-### 1. Install Ollama
-Download from [ollama.ai](https://ollama.ai) and pull a model:
+- Multi-chat with history, favourites, and delete
+- Sticky notes panel in sidebar
+- Export any conversation as .txt
+- Usage stats — total chats and messages
+- Configurable memory window, temperature, and model
+- Switch between Llama 3.3 70B, Mixtral, and Gemma on the fly
+- Debug mode showing agent reasoning steps live
+
+---
+
+## Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Agent framework | LangChain CONVERSATIONAL_REACT |
+| LLM | Groq API — Llama 3.3 70B / Mixtral / Gemma |
+| UI | Streamlit |
+| Search | DuckDuckGo |
+| Memory | ConversationBufferWindowMemory |
+
+---
+
+## Architecture
+User input
+|
+v
+LangChain agent (CONVERSATIONAL_REACT)
+|
+|-- Web search     (DuckDuckGo)
+|-- Calculator     (LLMMathChain)
+|-- Python REPL    (sandboxed)
+|-- Summariser     (LLMChain + prompt)
+|-- Fact checker   (search + LLM reasoning)
+|
+v
+ConversationBufferWindowMemory (k=6)
+|
+v
+Groq API — Llama 3.3 70B
+---
+
+## Setup
+
 ```bash
-ollama pull llama3.2
+git clone https://github.com/SAMREEN111-hash/OrbitAgent.git
+cd OrbitAgent
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
-### 2. Clone & Setup
-```bash
-git clone https://github.com/SAMREEN111-hash/SmartAgent.git
-cd SmartAgent
-python -m venv venv
-venv\Scripts\activate        # Windows
-pip install -r Source_Code/requirements.txt
-```
-
-### 3. Run
-```bash
-streamlit run Source_Code/Agentic_AI.py
-```
-Open → http://localhost:8501
+Get a free Groq API key at https://console.groq.com — no credit card required. Enter it in the sidebar when the app opens.
 
 ---
 
-## 💡 Example Use Cases
+## Developer
 
-| You type | SmartAgent does |
-|----------|----------------|
-| *"What is the latest news about EVs?"* | Searches web, summarises results |
-| *"Calculate compound interest on 50000 at 8% for 5 years"* | Solves with LLMMathChain |
-| *"Write a Python function to reverse a linked list"* | Writes and runs the code |
-| *"Summarise this article: [paste text]"* | Returns clean bullet points |
-| *"Is it true that India landed on the moon in 2023?"* | Fact-checks with web search |
-
----
-
-## 📁 Project Structure
-
-```
-SmartAgent/
-├── Source_Code/
-│   ├── Agentic_AI.py          # Main application (all features)
-│   └── requirements.txt       # Python dependencies
-├── Screenshots/               # App screenshots
-└── README.md                  # This file
-```
-
----
-
-## 🔧 Configuration
-
-All settings are adjustable in the sidebar:
-- **Model** — switch between Llama3.2, Mistral, Gemma
-- **Creativity (Temperature)** — 0.0 (focused) to 1.0 (creative)
-- **Memory Window** — how many messages the agent remembers (1–10)
-- **Debug Mode** — see agent reasoning steps in real time
-
----
-
-## 🙋 Developer
-
-**Samreen**  
-GitHub: [@SAMREEN111-hash](https://github.com/SAMREEN111-hash)
-
----
-
-*Built with ❤️ using LangChain, Ollama, and Streamlit*
+Samreen
+https://github.com/SAMREEN111-hash
