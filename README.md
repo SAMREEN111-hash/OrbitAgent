@@ -50,22 +50,15 @@ OrbitAgent is a conversational AI agent that decides which tool to use based on 
 
 ---
 
-User input
-    |
-    v
-LangChain agent (CONVERSATIONAL_REACT)
-    |
-    |-- Web search     (DuckDuckGo)
-    |-- Calculator     (LLMMathChain)
-    |-- Python REPL    (sandboxed)
-    |-- Summariser     (LLMChain + prompt)
-    |-- Fact checker   (search + LLM reasoning)
-    |
-    v
-ConversationBufferWindowMemory (k=6)
-    |
-    v
-Groq API — Llama 3.3 70B
+## Architecture
+
+| Step | Component |
+|------|-----------|
+| 1 — Input | User message enters the agent |
+| 2 — Routing | LangChain CONVERSATIONAL_REACT picks the right tool |
+| 3 — Tools | Web search / Calculator / Python REPL / Summariser / Fact checker |
+| 4 — Memory | ConversationBufferWindowMemory retains last 6 messages |
+| 5 — LLM | Groq API — Llama 3.3 70B generates the final response |
 
 ## Setup
 
