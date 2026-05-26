@@ -69,7 +69,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Get a free Groq API key at https://console.groq.com — no credit card required. Enter it in the sidebar when the app opens.
+
 
 ---
 
